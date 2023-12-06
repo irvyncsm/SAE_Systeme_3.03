@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Message",
+            "request": "launch",
+            "mainClass": "Message",
+            "projectName": "SAE_Systeme_3.03_61dd6698"
+        },
+        {
+            "type": "java",
             "name": "ChatApplication",
             "request": "launch",
             "vmArgs": "--module-path c:/Java/javafx-sdk-20.0.1/lib/ --add-modules javafx.controls",
