@@ -33,13 +33,15 @@ public class Server implements Runnable{
         }
     }
 
-    public void broadcast(String message){
-        for(ConnectionHandler handler : connections){
-            if (handler != null) {
+    public void broadcast(String senderName, String message) {
+        for (ConnectionHandler handler : connections) {
+            if (handler != null && !handler.getName().equals(senderName)) {
                 handler.sendMessage(message);
+                System.out.println(senderName + " sent a message to " + handler.getName() + ": " + message);
             }
         }
     }
+    
 
     public void shutdown(){
         try {
@@ -59,6 +61,7 @@ public class Server implements Runnable{
         private Socket client;
         private BufferedReader in;
         private PrintWriter out;
+        private String name;
 
         public ConnectionHandler(Socket clientSocket){
             this.client = clientSocket;
@@ -70,31 +73,42 @@ public class Server implements Runnable{
                 out = new PrintWriter(client.getOutputStream(), true);
                 in = new BufferedReader(new InputStreamReader(client.getInputStream()));
                 out.println("Please enter your name: ");
-                String name = in.readLine();
+                name = in.readLine();
                 System.out.println("New connection from: " + name);
-                broadcast(name + " has joined the chat.");
+                broadcast(name, name + " has joined the chat");
                 String line;
-                while((line = in.readLine()) != null){
-                    if (line.startsWith("/nick ")){
+
+                // Continuous loop to listen for messages
+                while ((line = in.readLine()) != null) {
+                    if (line.startsWith("/nick ")) {
                         String[] messageSplit = line.split(" ", 2);
-                        if (messageSplit.length == 2){
-                            broadcast(name + " changed their name to " + messageSplit[1]);
-                            System.out.println(name + " changed their name to " + messageSplit[1]);
-                            name = messageSplit[1];
+                        if (messageSplit.length == 2) {
+                            String newName = messageSplit[1];
+                            broadcast(name, name + " changed their name to " + newName);
+                            System.out.println(name + " changed their name to " + newName);
+                            name = newName;  // Update the 'name' field
                             out.println("Your name has been changed to " + name);
                         } else {
                             out.println("Invalid command. Usage: /nick <new name>");
                         }
-                    } else if (line.startsWith("/quit")){
-                        broadcast(name + " has left the chat.");
-                        shutdown();
+                    } else if (line.startsWith("/quit")) {
+                        broadcast(name, name + " has left the chat.");
+                        break;  // Exit the loop and terminate the thread
                     } else {
-                        broadcast(name + ": " + line);
+                        broadcast(name, name + ": " + line);
                     }
                 }
             } catch (IOException e) {
                 shutdown();
+            } finally {
+                shutdown();  // Ensure cleanup even if an exception occurs
             }
+        }
+
+
+
+        public String getName() {
+            return name;
         }
 
         public void sendMessage(String message){
