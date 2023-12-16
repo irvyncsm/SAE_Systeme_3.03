@@ -1,0 +1,641 @@
+format 224
+"src" // src
+  revision 1
+  modified_by 2 "toure"
+  // class settings
+  
+  classdiagramsettings member_max_width 0 end
+  
+  classcompositediagramsettings end
+  
+  usecasediagramsettings end
+  
+  sequencediagramsettings end
+  
+  collaborationdiagramsettings end
+  
+  objectdiagramsettings end
+  
+  objectcompositediagramsettings end
+  
+  componentdiagramsettings
+   end
+  
+  deploymentdiagramsettings
+   end
+  
+  statediagramsettings
+   end
+  
+  activitydiagramsettings
+   end
+  
+  java_dir "C:\\Users\\toure\\Documents\\SAE\\SAE_Systeme_3.03\\src/"
+  classview 128002 "src"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    classcompositediagramsettings end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    objectcompositediagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    class 128002 "Client"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${static}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 128002 // <realization>
+	relation 128002 -_-|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 128002 // <realization>
+	  b parent class_ref 128130 // Runnable
+      end
+
+      attribute 128002 "client"
+	private explicit_type "Socket"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 128130 "in"
+	private explicit_type "BufferedReader"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 128258 "out"
+	private explicit_type "PrintWriter"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      classrelation 128130 // inputHandler (<unidirectional association>)
+	relation 128130 --->
+	  a role_name "inputHandler" private
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 128130 // inputHandler (<unidirectional association>)
+	  b parent class_ref 128258 // InputHandler
+      end
+
+      operation 128002 "run"
+	public explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 128130 "shutdown"
+	public explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 128258 "getClient"
+	public explicit_return_type "Socket"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 128386 "main"
+	class_operation public explicit_return_type "void"
+	nparams 1
+	  param inout name "args" explicit_type "String"
+	multiplicity "[]"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0}[] ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+    end
+
+    class 128258 "InputHandler"
+      visibility package 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${static}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 128642 // <realization>
+	relation 128642 -_-|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 128642 // <realization>
+	  b parent class_ref 128130 // Runnable
+      end
+
+      classrelation 128770 // client (<unidirectional association>)
+	relation 128770 --->
+	  a role_name "client" private
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 128770 // client (<unidirectional association>)
+	  b parent class_ref 128002 // Client
+      end
+
+      attribute 128898 "out"
+	private explicit_type "PrintWriter"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 129026 "in"
+	private explicit_type "BufferedReader"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 129154 "InputHandler"
+	public explicit_return_type ""
+	nparams 1
+	  param inout name "client" type class_ref 128002 // Client
+	nexceptions 1
+	  explicit_exception "IOException"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 129282 "run"
+	public explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+    end
+
+    class 128386 "ConnectionHandler"
+      visibility package 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${static}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 128258 // <realization>
+	relation 128258 -_-|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 128258 // <realization>
+	  b parent class_ref 128130 // Runnable
+      end
+
+      attribute 128386 "client"
+	private explicit_type "Socket"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 128514 "in"
+	private explicit_type "BufferedReader"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 128642 "out"
+	private explicit_type "PrintWriter"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 128770 "name"
+	private explicit_type "String"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      classrelation 128386 // server (<unidirectional association>)
+	relation 128386 --->
+	  a role_name "server" private
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 128386 // server (<unidirectional association>)
+	  b parent class_ref 128514 // Server
+      end
+
+      classrelation 128514 // connections (<unidirectional association>)
+	relation 128514 --->
+	  stereotype "List"
+	  a role_name "connections" private
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 128514 // connections (<unidirectional association>)
+	  b parent class_ref 128386 // ConnectionHandler
+      end
+
+      operation 128514 "ConnectionHandler"
+	public explicit_return_type ""
+	nparams 2
+	  param inout name "clientSocket" explicit_type "Socket"
+	  param inout name "server" type class_ref 128514 // Server
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 128642 "run"
+	public explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 128770 "getName"
+	public explicit_return_type "String"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 128898 "sendMessage"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "message" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 129026 "shutdown"
+	public explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+    end
+
+    class 128514 "Server"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${static}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 128898 // <realization>
+	relation 128898 -_-|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 128898 // <realization>
+	  b parent class_ref 128130 // Runnable
+      end
+
+      classrelation 129026 // connections (<unidirectional association>)
+	relation 129026 --->
+	  stereotype "ArrayList"
+	  a role_name "connections" private
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 129026 // connections (<unidirectional association>)
+	  b parent class_ref 128386 // ConnectionHandler
+      end
+
+      attribute 129154 "server"
+	private explicit_type "ServerSocket"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 129282 "done"
+	private explicit_type "boolean"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 129410 "pool"
+	private explicit_type "ExecutorService"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 129410 "Server"
+	public explicit_return_type ""
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 129538 "run"
+	public explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 129666 "broadcast"
+	public explicit_return_type "void"
+	nparams 2
+	  param in name "senderName" explicit_type "String"
+	  param in name "message" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 129794 "shutdown"
+	public explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 129922 "getConnections"
+	public return_type class_ref 128386 // ConnectionHandler
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}List<${type}> ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 130050 "removeConnection"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "handler" type class_ref 128386 // ConnectionHandler
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 130178 "main"
+	class_operation public explicit_return_type "void"
+	nparams 1
+	  param inout name "args" explicit_type "String"
+	multiplicity "[]"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0}[] ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+    end
+
+    classdiagram 128002 "diagramme_de_classe"
+      classdiagramsettings hide_attributes no hide_operations no hide_getset_operations no hide_ports no show_members_full_definition yes show_members_visibility yes show_members_stereotype yes show_members_context java_package show_members_multiplicity yes show_members_initialization yes show_attribute_modifiers yes member_max_width 0 end
+      size A4
+    end
+  end
+
+  deploymentview 128002 "src"
+    //deployment diagram settings
+    deploymentdiagramsettings
+     end
+    artifact 128002 "Client"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import java.io.*;
+import java.net.Socket;
+${definition}"
+      associated_elems
+	class_ref 128002 // Client
+      end
+    end
+
+    artifact 128130 "ConnectionHandler"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
+import java.util.List;
+${definition}"
+      associated_elems
+	class_ref 128386 // ConnectionHandler
+      end
+    end
+
+    artifact 128258 "InputHandler"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+${definition}"
+      associated_elems
+	class_ref 128258 // InputHandler
+      end
+    end
+
+    artifact 128386 "Server"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import java.io.*;
+import java.net.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+${definition}"
+      associated_elems
+	class_ref 128514 // Server
+      end
+      comment " cd Documents\\GitHub\\SAE_Systeme_3.03\\src
+ javac -d ../bin/ *.java
+ java -cp ../bin/ Server"
+    end
+  end
+end
