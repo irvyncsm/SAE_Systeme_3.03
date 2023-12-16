@@ -1,6 +1,12 @@
+// cd Documents\GitHub\SAE_Systeme_3.03\src
+// javac -d ../bin/ *.java
+// java -cp ../bin/ Server
+
+
 import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -24,8 +30,10 @@ public class Server implements Runnable{
             pool = Executors.newCachedThreadPool();
             while (!done) {
                 Socket client = server.accept();
-                ConnectionHandler handler = new ConnectionHandler(client);
-                connections.add(handler);
+                ConnectionHandler handler = new ConnectionHandler(client, this);
+                synchronized (connections) {
+                    connections.add(handler);
+                }
                 pool.execute(handler);
             }
         } catch (IOException e) {
@@ -33,84 +41,40 @@ public class Server implements Runnable{
         }
     }
 
-    public void broadcast(String message){
-        for(ConnectionHandler handler : connections){
-            if (handler != null) {
-                handler.sendMessage(message);
+    public void broadcast(String senderName, String message) {
+        synchronized (connections) {
+            for (ConnectionHandler handler : connections) {
+                if (handler != null && handler.getName() != null && !handler.getName().equals(senderName)) {
+                    handler.sendMessage(message);
+                    System.out.println(senderName + " à envoyé : " + message + " à " + handler.getName());
+                }
             }
         }
     }
-
-    public void shutdown(){
+    
+    public void shutdown() {
         try {
             done = true;
-            if(!server.isClosed()) {
+            if (!server.isClosed()) {
                 server.close();
             }
-            for(ConnectionHandler handler : connections){
-                handler.shutdown();
+            synchronized (connections) {
+                for (ConnectionHandler handler : connections) {
+                    handler.shutdown();
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    class ConnectionHandler implements Runnable{
-        private Socket client;
-        private BufferedReader in;
-        private PrintWriter out;
+    public List<ConnectionHandler> getConnections() {
+        return connections;
+    }
 
-        public ConnectionHandler(Socket clientSocket){
-            this.client = clientSocket;
-        }
-
-        @Override
-        public void run() {
-            try {
-                out = new PrintWriter(client.getOutputStream(), true);
-                in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-                out.println("Please enter your name: ");
-                String name = in.readLine();
-                System.out.println("New connection from: " + name);
-                broadcast(name + " has joined the chat.");
-                String line;
-                while((line = in.readLine()) != null){
-                    if (line.startsWith("/nick ")){
-                        String[] messageSplit = line.split(" ", 2);
-                        if (messageSplit.length == 2){
-                            broadcast(name + " changed their name to " + messageSplit[1]);
-                            System.out.println(name + " changed their name to " + messageSplit[1]);
-                            name = messageSplit[1];
-                            out.println("Your name has been changed to " + name);
-                        } else {
-                            out.println("Invalid command. Usage: /nick <new name>");
-                        }
-                    } else if (line.startsWith("/quit")){
-                        broadcast(name + " has left the chat.");
-                        shutdown();
-                    } else {
-                        broadcast(name + ": " + line);
-                    }
-                }
-            } catch (IOException e) {
-                shutdown();
-            }
-        }
-
-        public void sendMessage(String message){
-            out.println(message);
-        }
-
-        public void shutdown(){
-            try {
-                in.close();
-                out.close();
-                if (!client.isClosed()) {
-                    client.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+    public void removeConnection(ConnectionHandler handler) {
+        synchronized (connections) {
+            connections.remove(handler);
         }
     }
 

@@ -6,7 +6,7 @@ public class Client implements Runnable{
     private Socket client;
     private BufferedReader in;
     private PrintWriter out;
-    private boolean done;
+    private InputHandler inputHandler;
 
     @Override
     public void run() {
@@ -14,9 +14,8 @@ public class Client implements Runnable{
             client = new Socket("localhost", 9999);
             in = new BufferedReader(new InputStreamReader(client.getInputStream()));
             out = new PrintWriter(client.getOutputStream(), true);
-            done = false;
 
-            InputHandler inputHandler = new InputHandler();
+            inputHandler = new InputHandler(this);
             Thread inputThread = new Thread(inputHandler);
             inputThread.start();
 
@@ -30,7 +29,6 @@ public class Client implements Runnable{
     }
 
     public void shutdown(){
-        done = true;
         try{
             in.close();
             out.close();
@@ -42,25 +40,8 @@ public class Client implements Runnable{
         }
     }
 
-    class InputHandler implements Runnable{
-
-        @Override
-        public void run() {
-            try {
-                BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
-                while (!done) {
-                    String message = input.readLine();
-                    if (message.equals("exit")) {
-                        input.close();
-                        shutdown();
-                    } else {
-                        out.println(message);
-                    }
-                }
-            } catch (IOException e) {
-                shutdown();
-            }   
-        }
+    public Socket getClient() {
+        return client;
     }
 
     public static void main(String[] args) {
