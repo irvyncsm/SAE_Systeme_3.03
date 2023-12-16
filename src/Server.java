@@ -24,8 +24,10 @@ public class Server implements Runnable{
             pool = Executors.newCachedThreadPool();
             while (!done) {
                 Socket client = server.accept();
-                ConnectionHandler handler = new ConnectionHandler(client);
-                connections.add(handler);
+                ConnectionHandler handler = new ConnectionHandler(client, this);
+                synchronized (connections) {
+                    connections.add(handler);
+                }
                 pool.execute(handler);
             }
         } catch (IOException e) {
@@ -34,36 +36,48 @@ public class Server implements Runnable{
     }
 
     public void broadcast(String senderName, String message) {
-        for (ConnectionHandler handler : connections) {
-            if (handler != null && handler.getName() != null && !handler.getName().equals(senderName)) {
-                handler.sendMessage(message);
-                System.out.println(senderName + " à envoyé : " + message + " à " + handler.getName());
+        synchronized (connections) {
+            for (ConnectionHandler handler : connections) {
+                if (handler != null && handler.getName() != null && !handler.getName().equals(senderName)) {
+                    handler.sendMessage(message);
+                    System.out.println(senderName + " à envoyé : " + message + " à " + handler.getName());
+                }
             }
         }
     }
     
-    public void shutdown(){
+    public void shutdown() {
         try {
             done = true;
-            if(!server.isClosed()) {
+            if (!server.isClosed()) {
                 server.close();
             }
-            for(ConnectionHandler handler : connections){
-                handler.shutdown();
+            synchronized (connections) {
+                for (ConnectionHandler handler : connections) {
+                    handler.shutdown();
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    class ConnectionHandler implements Runnable{
+    public void removeConnection(ConnectionHandler handler) {
+        synchronized (connections) {
+            connections.remove(handler);
+        }
+    }
+
+    class ConnectionHandler implements Runnable {
         private Socket client;
         private BufferedReader in;
         private PrintWriter out;
         private String name;
+        private Server server;
 
-        public ConnectionHandler(Socket clientSocket){
+        public ConnectionHandler(Socket clientSocket, Server server) {
             this.client = clientSocket;
+            this.server = server;
         }
 
         @Override
@@ -109,6 +123,7 @@ public class Server implements Runnable{
                         }
                     } else if (line.startsWith("/quit")) {
                         broadcast(name, name + " a quitté le chat.");
+                        server.removeConnection(this);
                         break;
                     } else if (line.startsWith("/list")) {
                         out.println("Liste des utilisateurs connectés: ");
@@ -179,7 +194,8 @@ public class Server implements Runnable{
                     }
                 }
             } catch (IOException e) {
-                shutdown();
+                // Ici, on gère la déconnexion inattendue
+                server.broadcast(name, name + " a quitté le chat de manière inattendue.");
             } finally {
                 shutdown();
             }
@@ -199,6 +215,9 @@ public class Server implements Runnable{
                 out.close();
                 if (!client.isClosed()) {
                     client.close();
+                }
+                synchronized (connections) {
+                    connections.remove(this);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
