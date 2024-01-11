@@ -1,5 +1,7 @@
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Client implements Runnable{
     
@@ -7,6 +9,7 @@ public class Client implements Runnable{
     private BufferedReader in;
     private PrintWriter out;
     private InputHandler inputHandler;
+    
 
     @Override
     public void run() {
