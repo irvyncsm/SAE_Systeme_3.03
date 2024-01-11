@@ -15,8 +15,6 @@ class ConnectionHandler implements Runnable {
     private List<ConnectionHandler> connections;
     private List<String> listeFollowers;
     private List<String> listeFollowings;
-    private int nombreFollowers;
-    private int nombreFollowings;
 
     public ConnectionHandler(Socket clientSocket, Server server) {
         this.client = clientSocket;
@@ -24,8 +22,6 @@ class ConnectionHandler implements Runnable {
         this.connections = server.getConnections();
         this.listeFollowers = new ArrayList<>();
         this.listeFollowings = new ArrayList<>();
-        this.nombreFollowers = 0;
-        this.nombreFollowings = 0;
     }
 
     public int getNombreFollowers() {
