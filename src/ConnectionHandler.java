@@ -32,10 +32,6 @@ class ConnectionHandler implements Runnable {
         return listeFollowings.size();
     }
 
-    public void suivreClient(String client){
-        listeFollowings.add(client);
-    }
-
     public void ajouterFollower(String client){
         listeFollowers.add(client);
     }
