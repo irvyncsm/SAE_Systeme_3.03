@@ -63,6 +63,8 @@ public class ConnectionHandler implements Runnable {
             out = new PrintWriter(client.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(client.getInputStream()));
             requestName(in);
+            afficherAide();
+
             String readLine;
 
             while ((readLine = in.readLine()) != null) {
