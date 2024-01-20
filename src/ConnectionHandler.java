@@ -195,16 +195,17 @@ public class ConnectionHandler implements Runnable {
                     out.println("--> /like <id_message> : Vous permet de liker un message.");
                     out.println("--> /unlike <id_message> : Vous permet de unliker un message.");
                     out.println("--> /delete <id_message> : Vous permet de supprimer un message.");
+                    out.println("--> /profil : Vous permet de voir votre profil. (nombre de followers, nombre de followings)");
+                    out.println("--> /voirProfil <name> : Vous permet de voir le profil d'un utilisateur. (nombre de followers, nombre de followings)");
                     out.println("--> /quit : Quitte le chat.");
-                }
-                else if(line.startsWith("/voirProfil")) {
+                } else if(line.startsWith("/profil")) {
                      for (ConnectionHandler handler : connections) {
                             if (handler != null && handler.getName() != null && handler.getName().equals(name)) {
                                 out.println("Vous êtes suivi par " + handler.getNombreFollowers() + " personnes.");
                                 out.println("Vous suivez " + handler.getNombreFollowings() + " personnes.");
                             }
                         }
-                }else if(line.startsWith("/voirLeProfilAutreUtilisateur")){
+                }else if(line.startsWith("/voirProfil")){
                     String[] messageSplit = line.split(" ", 2);
                     if (messageSplit.length == 2) {
                         String followName = messageSplit[1];
@@ -220,9 +221,13 @@ public class ConnectionHandler implements Runnable {
                             out.println("Utilisateur non trouvé.");
                         }
                     } else {
-                        out.println("Commande Invalide. Usage: /voirProfilAutreUtilisateur <name>");
+                        out.println("Commande Invalide. Usage: /voirProfil <name>");
                     }
                 }else {
+                    // Si le message n'est pas une commande, on l'envoie à tous les clients connectés
+                    //
+                    //
+                    //
                     server.broadcast(name, name + ": " + line);
                 }
             }
