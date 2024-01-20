@@ -20,7 +20,6 @@ public class ControleurMessagerie implements EventHandler<ActionEvent>{
             try {
                 username = this.appli.getClient().getUser().getUsername();
             } catch (Exception e) {
-                System.out.println("Utilisateur null");
             }
             Message m = new Message(0, username, message, new Date(), 0);
             String json = m.toJSON();

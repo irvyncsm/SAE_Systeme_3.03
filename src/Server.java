@@ -1,6 +1,7 @@
 import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -41,6 +42,19 @@ public class Server implements Runnable{
                 if (handler != null && handler.getName() != null && !handler.getName().equals(senderName)) {
                     handler.sendMessage(message);
                     System.out.println(senderName + " à envoyé : " + message + " à " + handler.getName());
+                }
+            }
+        }
+    }
+    
+    public void postMessage(String senderName, String message, List<String> listeFollowers) {
+        synchronized (connections) {
+            for (ConnectionHandler handler : connections) {
+                if (handler != null && handler.getName() != null && !handler.getName().equals(senderName)) {
+                    if (listeFollowers.contains(handler.getName())) {
+                        handler.sendMessage(message);
+                        System.out.println(senderName + " à envoyé : " + message + " à " + handler.getName());
+                    }
                 }
             }
         }

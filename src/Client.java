@@ -11,11 +11,13 @@ public class Client {
     private PrintWriter out;
     private ChatApplication application;
     private boolean connected;
+    private boolean isFirstConnection;
     private User user;
 
     public Client(ChatApplication application) {
         this.application = application;
         connected = false;
+        isFirstConnection = true;
         new Thread(this::connectToServer).start();
     }
 
@@ -67,6 +69,10 @@ public class Client {
     public void handleUserMessage(String message) {
         String content = message.substring(message.indexOf("content") + 10, message.indexOf("date") - 3);
         content = content.substring(1, content.length() - 1);
+        if (isFirstConnection) {
+            user = new User(content);
+            isFirstConnection = false;
+        }
         application.traiterMessage("Vous: " + content);
         sendMessage(message);
     }
