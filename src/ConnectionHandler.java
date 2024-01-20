@@ -196,7 +196,33 @@ public class ConnectionHandler implements Runnable {
                     out.println("--> /unlike <id_message> : Vous permet de unliker un message.");
                     out.println("--> /delete <id_message> : Vous permet de supprimer un message.");
                     out.println("--> /quit : Quitte le chat.");
-                } else {
+                }
+                else if(line.startsWith("/voirProfil")) {
+                     for (ConnectionHandler handler : connections) {
+                            if (handler != null && handler.getName() != null && handler.getName().equals(name)) {
+                                out.println("Vous êtes suivi par " + handler.getNombreFollowers() + " personnes.");
+                                out.println("Vous suivez " + handler.getNombreFollowings() + " personnes.");
+                            }
+                        }
+                }else if(line.startsWith("/voirLeProfilAutreUtilisateur")){
+                    String[] messageSplit = line.split(" ", 2);
+                    if (messageSplit.length == 2) {
+                        String followName = messageSplit[1];
+                        boolean found = false;
+                        for (ConnectionHandler handler : connections) {
+                            if (handler != null && handler.getName() != null && handler.getName().equals(followName)) {
+                                found = true;
+                                out.println(followName + " est suivi par " + handler.getNombreFollowers() + " personnes.");
+                                out.println(followName + " suit " + handler.getNombreFollowings() + " personnes.");
+                            }
+                        }
+                        if (!found) {
+                            out.println("Utilisateur non trouvé.");
+                        }
+                    } else {
+                        out.println("Commande Invalide. Usage: /voirProfilAutreUtilisateur <name>");
+                    }
+                }else {
                     server.broadcast(name, name + ": " + line);
                 }
             }
