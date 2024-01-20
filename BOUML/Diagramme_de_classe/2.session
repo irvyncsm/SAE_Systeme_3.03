@@ -1,0 +1,14 @@
+window_sizes 1800 918 450 1345 766 104
+
+diagrams
+  active  classdiagram_ref 128002 // diagramme de classe
+    996 633 75 A4 0 0
+end
+show_stereotypes
+selected class_ref 129666 // VueMessagerie
+open
+  classview_ref 128002 // diagramme de classe
+  deploymentview_ref 128002 // src
+  classview_ref 128130 // src
+end
+end

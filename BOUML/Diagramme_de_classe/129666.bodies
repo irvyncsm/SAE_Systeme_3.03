@@ -1,0 +1,21 @@
+class VueMessagerie
+!!!136066.java!!!	VueMessagerie(inout chatArea : TextArea, inout messageTextField : TextField, inout BtnEnvoyerMessage : Button, inout statutLabel : Label)
+        super();
+        this.chatArea = chatArea;
+        this.messageTextField = messageTextField;
+        this.BtnEnvoyerMessage = BtnEnvoyerMessage;
+        this.statutLabel = statutLabel;
+        this.setCenter(creerPage());
+!!!136194.java!!!	creerPage() : BorderPane
+        BorderPane racine = new BorderPane();
+        racine.setPadding(new Insets(10));
+        racine.setCenter(chatArea);
+        racine.setBottom(creerSaisieMessage());
+        racine.setTop(statutLabel);
+        return racine;
+!!!136322.java!!!	creerSaisieMessage() : BorderPane
+        BorderPane borderPane = new BorderPane();
+        borderPane.setCenter(messageTextField);
+        borderPane.setRight(BtnEnvoyerMessage);
+        BorderPane.setMargin(messageTextField, new Insets(0, 0, 0, 5));
+        return borderPane;

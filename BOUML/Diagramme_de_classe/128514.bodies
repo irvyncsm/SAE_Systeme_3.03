@@ -1,0 +1,19 @@
+class User
+!!!135170.java!!!	User(in username : String)
+        this.username = username;
+        this.followers = new ArrayList<>();
+        this.following = new ArrayList<>();
+        this.messages = new ArrayList<>();
+        this.likes = new ArrayList<>();
+!!!135298.java!!!	getUsername() : String
+        return username;
+!!!135426.java!!!	setUsername(in username : String) : void
+        this.username = username;
+!!!135554.java!!!	getFollowers() : User
+        return followers;
+!!!135682.java!!!	getFollowing() : User
+        return following;
+!!!135810.java!!!	getMessages() : Message
+        return messages;
+!!!135938.java!!!	getLikes() : Message
+        return likes;

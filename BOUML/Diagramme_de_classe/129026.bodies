@@ -1,0 +1,66 @@
+class Server
+!!!134274.java!!!	Server()
+        connections = new ArrayList<>();
+        done = false;
+!!!134402.java!!!	run() : void
+        try {
+            // Création du socket du serveur et du pool d'exécution
+            server = new ServerSocket(9999);
+            pool = Executors.newCachedThreadPool();
+
+            // Boucle d'attente des connexions entrantes
+            while (!done) {
+                // Acceptation d'une nouvelle connexion
+                Socket client = server.accept();
+
+                // Création d'un gestionnaire de connexion pour le nouveau client
+                ConnectionHandler handler = new ConnectionHandler(client, this);
+
+                // Ajout du gestionnaire de connexion à la liste des connexions
+                synchronized (connections) {
+                    connections.add(handler);
+                }
+
+                // Exécution du gestionnaire de connexion dans le pool
+                pool.execute(handler);
+            }
+        } catch (IOException e) {
+            // Gestion de l'arrêt inattendu du serveur
+            shutdown();
+        }
+!!!134530.java!!!	broadcast(in senderName : String, in message : String) : void
+        synchronized (connections) {
+            for (ConnectionHandler handler : connections) {
+                if (handler != null && handler.getName() != null && !handler.getName().equals(senderName)) {
+                    handler.sendMessage(message);
+                    System.out.println(senderName + " a envoyé : " + message + " à " + handler.getName());
+                }
+            }
+        }
+!!!134658.java!!!	shutdown() : void
+        try {
+            done = true;
+
+            // Fermeture du socket du serveur
+            if (!server.isClosed()) {
+                server.close();
+            }
+
+            // Notification de tous les gestionnaires de connexion pour qu'ils se ferment
+            synchronized (connections) {
+                for (ConnectionHandler handler : connections) {
+                    handler.shutdown();
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+!!!134786.java!!!	removeConnection(inout handler : ConnectionHandler) : void
+        synchronized (connections) {
+            connections.remove(handler);
+        }
+!!!134914.java!!!	getConnections() : ConnectionHandler
+        return connections;
+!!!135042.java!!!	main(inout args : String [[]]) : void
+        Server server = new Server();
+        server.run();

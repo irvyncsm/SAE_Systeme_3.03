@@ -1,0 +1,36 @@
+class ControleurEnterMessagerie
+!!!131970.java!!!	ControleurEnterMessagerie(inout appli : ChatApplication, inout client : Client)
+        this.appli = appli;
+        this.client = client;
+!!!132098.java!!!	handle(inout event : KeyEvent) : void
+        if (event.getCode().equals(KeyCode.ENTER)) {
+            String message = this.appli.getMessage();
+            String username = "";
+
+            try {
+                // Récupère le nom d'utilisateur du client connecté
+                username = this.appli.getClient().getUser().getUsername();
+            } catch (Exception e) {
+                System.out.println("Utilisateur null");
+            }
+
+            // Crée un objet Message avec les informations fournies
+            Message m = new Message(0, username, message, new Date(), 0);
+            String json = m.toJSON();
+
+            if (!message.isEmpty()) {
+                // Affiche le message dans la console
+                System.out.println("Message envoyé : " + json);
+                
+                // Envoie le message via le client
+                sendMessage(json);
+            }
+        }
+!!!132226.java!!!	sendMessage(in message : String) : void
+        if (!message.isEmpty()) {
+            // Utilise le client pour envoyer le message au serveur
+            client.handleUserMessage(message);
+            
+            // Efface le champ de saisie de message dans l'interface graphique
+            this.appli.getMessageField().clear();
+        }

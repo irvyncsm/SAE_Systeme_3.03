@@ -1,0 +1,57 @@
+class ChatApplication
+!!!128002.java!!!	main(inout args : String [[]]) : void
+        launch(args);
+!!!128130.java!!!	start(inout stage : Stage) : void
+        // Initialisation du client de chat
+        client = new Client(this);
+
+        // Initialisation des composants graphiques
+        chatArea = new TextArea();
+        chatArea.setEditable(false);
+
+        messageTextField = new TextField();
+        messageTextField.setOnKeyReleased(new ControleurEnterMessagerie(this, client));
+        BtnEnvoyerMessage = new Button("Envoyer");
+        BtnEnvoyerMessage.setOnAction(new ControleurMessagerie(this, client));
+
+        statutLabel = new Label("Impossible de se connecter au serveur. Nouvelle tentative dans 5 secondes.");
+
+        // Création de la vue de la messagerie
+        VueMessagerie vueMessagerie = new VueMessagerie(chatArea, messageTextField, BtnEnvoyerMessage, statutLabel);
+        BorderPane pageAccueil = vueMessagerie;
+
+        // Configuration de la scène principale
+        stage.setTitle("Instagram");
+        stage.setScene(new Scene(pageAccueil, 600, 400));
+
+        // Gestion de la fermeture de l'application
+        stage.setOnCloseRequest(e -> {
+            if (client != null) {
+                client.shutdown();
+            }
+            Platform.exit();
+        });
+
+        // Affichage de la scène principale
+        stage.show();
+!!!128258.java!!!	getMessage() : String
+        return messageTextField.getText().trim();
+!!!128386.java!!!	getMessageField() : TextField
+        return messageTextField;
+!!!128514.java!!!	clearChatArea() : void
+        Platform.runLater(() -> chatArea.clear());
+!!!128642.java!!!	setTextFieldDisabled(inout disabled : boolean) : void
+        Platform.runLater(() -> messageTextField.setDisable(disabled));
+!!!128770.java!!!	traiterMessage(in message : String) : void
+        Platform.runLater(() -> chatArea.appendText(message + "\n"));
+!!!128898.java!!!	setStatut(in statut : String) : void
+        Platform.runLater(() -> statutLabel.setText(statut));
+
+        // Change la couleur du texte en fonction du statut
+        if (statut.equals("Connecté au serveur.")) {
+            Platform.runLater(() -> statutLabel.setStyle("-fx-text-fill: green;"));
+        } else {
+            Platform.runLater(() -> statutLabel.setStyle("-fx-text-fill: red;"));
+        }
+!!!129026.java!!!	getClient() : Client
+        return client;

@@ -1,0 +1,1929 @@
+format 224
+"src" // src
+  revision 1
+  modified_by 2 "toure"
+  // class settings
+  
+  classdiagramsettings member_max_width 0 end
+  
+  classcompositediagramsettings end
+  
+  usecasediagramsettings end
+  
+  sequencediagramsettings end
+  
+  collaborationdiagramsettings end
+  
+  objectdiagramsettings end
+  
+  objectcompositediagramsettings end
+  
+  componentdiagramsettings
+   end
+  
+  deploymentdiagramsettings
+   end
+  
+  statediagramsettings
+   end
+  
+  activitydiagramsettings
+   end
+  
+  java_dir "C:\\Users\\toure\\Documents\\SAE\\SAE_Systeme_3.03\\src/"
+  deploymentview 128002 "src"
+    //deployment diagram settings
+    deploymentdiagramsettings
+     end
+    artifact 128002 "ChatApplication"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
+${definition}"
+      associated_elems
+	class_ref 128130 // ChatApplication
+      end
+    end
+
+    artifact 128130 "Client"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
+${definition}"
+      associated_elems
+	class_ref 128386 // Client
+      end
+    end
+
+    artifact 128258 "ConnectionHandler"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import java.io.*;
+import java.net.*;
+import java.util.List;
+import java.util.ArrayList;
+${definition}"
+      associated_elems
+	class_ref 128770 // ConnectionHandler
+      end
+    end
+
+    artifact 128386 "ControleurEnterMessagerie"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import java.util.Date;
+import javafx.event.EventHandler;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+${definition}"
+      associated_elems
+	class_ref 129154 // ControleurEnterMessagerie
+      end
+    end
+
+    artifact 128514 "ControleurMessagerie"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import java.util.Date;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+${definition}"
+      associated_elems
+	class_ref 129410 // ControleurMessagerie
+      end
+    end
+
+    artifact 128642 "Message"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import java.text.SimpleDateFormat;
+import java.util.Date;
+${definition}"
+      associated_elems
+	class_ref 129538 // Message
+      end
+    end
+
+    artifact 128770 "Server"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import java.io.*;
+import java.net.*;
+import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+${definition}"
+      associated_elems
+	class_ref 129026 // Server
+      end
+    end
+
+    artifact 128898 "User"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import java.util.ArrayList;
+import java.util.List;
+${definition}"
+      associated_elems
+	class_ref 128514 // User
+      end
+    end
+
+    artifact 129026 "VueMessagerie"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.geometry.Insets;
+${definition}"
+      associated_elems
+	class_ref 129666 // VueMessagerie
+      end
+    end
+  end
+
+  classview 128130 "src"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    classcompositediagramsettings end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    objectcompositediagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    class 128130 "ChatApplication"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${static}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      comment "La classe ChatApplication est l'entrée principale de l'application de chat JavaFX.
+Elle étend la classe Application et gère l'initialisation de l'interface graphique,
+la création du client de chat, et les interactions avec l'utilisateur.
+"
+      classrelation 128002 // <generalisation>
+	relation 128002 ---|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 128002 // <generalisation>
+	  b parent class_ref 128258 // Application
+      end
+
+      attribute 128002 "chatArea"
+	private explicit_type "TextArea"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+	comment " Zone d'affichage des messages"
+      end
+
+      attribute 128130 "messageTextField"
+	private explicit_type "TextField"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+	comment " Champ de saisie de messages"
+      end
+
+      attribute 128258 "BtnEnvoyerMessage"
+	private explicit_type "Button"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+	comment " Bouton pour envoyer les messages"
+      end
+
+      attribute 128386 "statutLabel"
+	private explicit_type "Label"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+	comment " Étiquette affichant le statut de la connexion"
+      end
+
+      classrelation 128130 // client (<unidirectional association>)
+	relation 128130 --->
+	  a role_name "client" private
+	    comment " Instance du client de chat"
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 128130 // client (<unidirectional association>)
+	  b parent class_ref 128386 // Client
+      end
+
+      operation 128002 "main"
+	class_operation public explicit_return_type "void"
+	nparams 1
+	  param inout name "args" explicit_type "String"
+	multiplicity "[]"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0}[] ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Point d'entrée principal de l'application JavaFX.
+@param args Les arguments de ligne de commande (non utilisés).
+"
+      end
+
+      operation 128130 "start"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "stage" explicit_type "Stage"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+	comment "Méthode de démarrage de l'application JavaFX.
+@param stage La scène principale de l'application.
+"
+      end
+
+      operation 128258 "getMessage"
+	public explicit_return_type "String"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Récupère le texte du champ de saisie de messages.
+@return Le texte du champ de saisie.
+"
+      end
+
+      operation 128386 "getMessageField"
+	public explicit_return_type "TextField"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Récupère le champ de saisie de messages.
+@return Le champ de saisie de messages.
+"
+      end
+
+      operation 128514 "clearChatArea"
+	public explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Efface la zone d'affichage des messages.
+"
+      end
+
+      operation 128642 "setTextFieldDisabled"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "disabled" explicit_type "boolean"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Désactive ou active le champ de saisie de messages.
+@param disabled Si vrai, le champ de saisie est désactivé ; sinon, il est activé.
+"
+      end
+
+      operation 128770 "traiterMessage"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "message" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Traite et affiche un message dans la zone d'affichage des messages.
+@param message Le message à afficher.
+"
+      end
+
+      operation 128898 "setStatut"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "statut" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Met à jour le statut de la connexion affiché dans l'interface graphique.
+@param statut Le nouveau statut de la connexion.
+"
+      end
+
+      operation 129026 "getClient"
+	public return_type class_ref 128386 // Client
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Récupère l'instance du client de chat.
+@return L'instance du client de chat.
+"
+      end
+    end
+
+    class 128386 "Client"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${static}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      attribute 128514 "client"
+	private explicit_type "Socket"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 128642 "in"
+	private explicit_type "BufferedReader"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 128770 "out"
+	private explicit_type "PrintWriter"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      classrelation 128258 // application (<unidirectional association>)
+	relation 128258 --->
+	  a role_name "application" private
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 128258 // application (<unidirectional association>)
+	  b parent class_ref 128130 // ChatApplication
+      end
+
+      attribute 128898 "connected"
+	private explicit_type "boolean"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      classrelation 128386 // user (<unidirectional association>)
+	relation 128386 --->
+	  a role_name "user" private
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 128386 // user (<unidirectional association>)
+	  b parent class_ref 128514 // User
+      end
+
+      operation 129154 "Client"
+	public explicit_return_type ""
+	nparams 1
+	  param inout name "application" type class_ref 128130 // ChatApplication
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 129282 "connectToServer"
+	private explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 129410 "receiveMessages"
+	private explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 129538 "sendMessage"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "message" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 129666 "handleUserMessage"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "message" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 129794 "shutdown"
+	public explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 129922 "getUser"
+	public return_type class_ref 128514 // User
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      class 128642 "MessageHandler"
+	visibility package stereotype "interface"
+	cpp_decl ""
+	java_decl "${comment}${@}${visibility}${static}interface ${name}${extends} {
+${members}}
+"
+	php_decl ""
+	python_2_2 python_decl ""
+	idl_decl ""
+	explicit_switch_type ""
+	mysql_decl ""
+	
+	operation 130050 "handleMessage"
+	  public explicit_return_type "void"
+	  nparams 1
+	    param in name "message" explicit_type "String"
+	  
+	  java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	  
+	  
+	  
+	end
+      end
+    end
+
+    class 128514 "User"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${static}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      comment "La classe User représente un utilisateur dans le système de chat.
+Chaque utilisateur a un nom d'utilisateur unique et peut avoir des followers,
+suivre d'autres utilisateurs, publier des messages, et aimer des messages d'autres utilisateurs.
+"
+      attribute 130818 "username"
+	private explicit_type "String"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+	comment " Le nom d'utilisateur unique de l'utilisateur"
+      end
+
+      classrelation 129922 // followers (<unidirectional association>)
+	relation 129922 --->
+	  stereotype "List"
+	  a role_name "followers" private
+	    comment " Liste des utilisateurs qui suivent cet utilisateur"
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 129922 // followers (<unidirectional association>)
+	  b parent class_ref 128514 // User
+      end
+
+      classrelation 130050 // following (<unidirectional association>)
+	relation 130050 --->
+	  stereotype "List"
+	  a role_name "following" private
+	    comment " Liste des utilisateurs suivis par cet utilisateur"
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 130050 // following (<unidirectional association>)
+	  b parent class_ref 128514 // User
+      end
+
+      classrelation 130178 // messages (<unidirectional association>)
+	relation 130178 --->
+	  stereotype "List"
+	  a role_name "messages" private
+	    comment " Liste des messages publiés par cet utilisateur"
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 130178 // messages (<unidirectional association>)
+	  b parent class_ref 129538 // Message
+      end
+
+      classrelation 130306 // likes (<unidirectional association>)
+	relation 130306 --->
+	  stereotype "List"
+	  a role_name "likes" private
+	    comment " Liste des messages aimés par cet utilisateur"
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 130306 // likes (<unidirectional association>)
+	  b parent class_ref 129538 // Message
+      end
+
+      operation 135170 "User"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "username" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Constructeur de la classe User.
+@param username Le nom d'utilisateur unique de l'utilisateur.
+"
+      end
+
+      operation 135298 "getUsername"
+	public explicit_return_type "String"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Retourne le nom d'utilisateur de l'utilisateur.
+@return Le nom d'utilisateur.
+"
+      end
+
+      operation 135426 "setUsername"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "username" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Modifie le nom d'utilisateur de l'utilisateur.
+@param username Le nouveau nom d'utilisateur.
+"
+      end
+
+      operation 135554 "getFollowers"
+	public return_type class_ref 128514 // User
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}List<${type}> ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Retourne la liste des utilisateurs qui suivent cet utilisateur.
+@return La liste des followers.
+"
+      end
+
+      operation 135682 "getFollowing"
+	public return_type class_ref 128514 // User
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}List<${type}> ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Retourne la liste des utilisateurs suivis par cet utilisateur.
+@return La liste des following.
+"
+      end
+
+      operation 135810 "getMessages"
+	public return_type class_ref 129538 // Message
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}List<${type}> ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Retourne la liste des messages publiés par cet utilisateur.
+@return La liste des messages.
+"
+      end
+
+      operation 135938 "getLikes"
+	public return_type class_ref 129538 // Message
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}List<${type}> ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Retourne la liste des messages aimés par cet utilisateur.
+@return La liste des likes.
+"
+      end
+    end
+
+    class 128770 "ConnectionHandler"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${static}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      comment "La classe ConnectionHandler gère la communication avec un client connecté à un serveur de chat.
+Chaque instance de cette classe est associée à un client individuel.
+"
+      classrelation 128514 // <realization>
+	relation 128514 -_-|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 128514 // <realization>
+	  b parent class_ref 128898 // Runnable
+      end
+
+      attribute 129026 "client"
+	private explicit_type "Socket"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+	comment " Le socket du client"
+      end
+
+      attribute 129154 "in"
+	private explicit_type "BufferedReader"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+	comment " Flux d'entrée pour lire les données du client"
+      end
+
+      attribute 129282 "out"
+	private explicit_type "PrintWriter"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+	comment " Flux de sortie pour envoyer des données au client"
+      end
+
+      attribute 129410 "name"
+	private explicit_type "String"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+	comment " Nom de l'utilisateur associé à ce gestionnaire de connexion"
+      end
+
+      classrelation 128642 // server (<unidirectional association>)
+	relation 128642 --->
+	  a role_name "server" private
+	    comment " Référence au serveur auquel le gestionnaire de connexion est attaché"
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 128642 // server (<unidirectional association>)
+	  b parent class_ref 129026 // Server
+      end
+
+      classrelation 128770 // connections (<unidirectional association>)
+	relation 128770 --->
+	  stereotype "List"
+	  a role_name "connections" private
+	    comment " Liste des autres gestionnaires de connexion du serveur"
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 128770 // connections (<unidirectional association>)
+	  b parent class_ref 128770 // ConnectionHandler
+      end
+
+      attribute 129538 "listeFollowers"
+	private explicit_type "String"
+	stereotype "List"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+	comment " Liste des utilisateurs qui suivent l'utilisateur associé"
+      end
+
+      attribute 129666 "listeFollowings"
+	private explicit_type "String"
+	stereotype "List"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+	comment " Liste des utilisateurs suivis par l'utilisateur associé"
+      end
+
+      operation 130178 "ConnectionHandler"
+	public explicit_return_type ""
+	nparams 2
+	  param inout name "clientSocket" explicit_type "Socket"
+	  param inout name "server" type class_ref 129026 // Server
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Constructeur de la classe ConnectionHandler.
+@param clientSocket Le socket du client.
+@param server Référence au serveur auquel le gestionnaire de connexion est attaché.
+"
+      end
+
+      operation 130306 "getNombreFollowers"
+	public explicit_return_type "int"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Retourne le nombre d'utilisateurs qui suivent l'utilisateur associé.
+@return Le nombre de followers.
+"
+      end
+
+      operation 130434 "getNombreFollowings"
+	public explicit_return_type "int"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Retourne le nombre d'utilisateurs suivis par l'utilisateur associé.
+@return Le nombre de followings.
+"
+      end
+
+      operation 130562 "suivreClient"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "client" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Permet à l'utilisateur associé de suivre un autre utilisateur.
+@param client Le nom de l'utilisateur à suivre.
+"
+      end
+
+      operation 130690 "ajouterFollower"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "client" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Ajoute un follower à la liste des utilisateurs qui suivent l'utilisateur associé.
+@param client Le nom du follower à ajouter.
+"
+      end
+
+      operation 130818 "ajouterFollowing"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "client" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Ajoute un utilisateur à la liste des utilisateurs suivis par l'utilisateur associé.
+@param client Le nom de l'utilisateur à suivre.
+"
+      end
+
+      operation 130946 "retirerFollower"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "client" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Retire un follower de la liste des utilisateurs qui suivent l'utilisateur associé.
+@param client Le nom du follower à retirer.
+"
+      end
+
+      operation 131074 "retirerFollowing"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "client" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Retire un utilisateur de la liste des utilisateurs suivis par l'utilisateur associé.
+@param client Le nom de l'utilisateur à ne plus suivre.
+"
+      end
+
+      operation 131202 "getListeFollowers"
+	public explicit_return_type "List<String>"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Retourne la liste des followers de l'utilisateur associé.
+@return La liste des followers.
+"
+      end
+
+      operation 131330 "getListeFollowings"
+	public explicit_return_type "List<String>"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Retourne la liste des utilisateurs suivis par l'utilisateur associé.
+@return La liste des followings.
+"
+      end
+
+      operation 131458 "run"
+	public explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+	comment "Méthode exécutée lorsqu'un thread est démarré. Gère la communication avec le client.
+"
+      end
+
+      operation 131586 "getName"
+	public explicit_return_type "String"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Retourne le nom de l'utilisateur associé à ce gestionnaire de connexion.
+@return Le nom de l'utilisateur.
+"
+      end
+
+      operation 131714 "sendMessage"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "message" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 131842 "shutdown"
+	public explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+    end
+
+    class 129026 "Server"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${static}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      comment "La classe Server représente le serveur de chat qui gère les connexions des clients.
+Chaque instance de cette classe est capable de traiter plusieurs connexions simultanées.
+"
+      classrelation 129666 // <realization>
+	relation 129666 -_-|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 129666 // <realization>
+	  b parent class_ref 128898 // Runnable
+      end
+
+      classrelation 129794 // connections (<unidirectional association>)
+	relation 129794 --->
+	  stereotype "ArrayList"
+	  a role_name "connections" private
+	    comment " Liste des gestionnaires de connexion des clients"
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 129794 // connections (<unidirectional association>)
+	  b parent class_ref 128770 // ConnectionHandler
+      end
+
+      attribute 130434 "server"
+	private explicit_type "ServerSocket"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+	comment " Le socket du serveur"
+      end
+
+      attribute 130562 "done"
+	private explicit_type "boolean"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+	comment " Indicateur pour arrêter le serveur"
+      end
+
+      attribute 130690 "pool"
+	private explicit_type "ExecutorService"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+	comment " Pool d'exécution pour gérer les threads des clients"
+      end
+
+      operation 134274 "Server"
+	public explicit_return_type ""
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Constructeur de la classe Server.
+Initialise la liste des connexions et l'indicateur done.
+"
+      end
+
+      operation 134402 "run"
+	public explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+	comment "Méthode exécutée lorsqu'un thread Server est démarré.
+Gère les connexions entrantes et crée un gestionnaire de connexion pour chaque client.
+"
+      end
+
+      operation 134530 "broadcast"
+	public explicit_return_type "void"
+	nparams 2
+	  param in name "senderName" explicit_type "String"
+	  param in name "message" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Envoie un message à tous les clients connectés, à l'exception de l'expéditeur.
+@param senderName Le nom de l'expéditeur.
+@param message Le message à diffuser.
+"
+      end
+
+      operation 134658 "shutdown"
+	public explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Arrête proprement le serveur en fermant le socket du serveur et en notifiant tous les gestionnaires de connexion.
+"
+      end
+
+      operation 134786 "removeConnection"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "handler" type class_ref 128770 // ConnectionHandler
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Supprime un gestionnaire de connexion de la liste des connexions.
+@param handler Le gestionnaire de connexion à supprimer.
+"
+      end
+
+      operation 134914 "getConnections"
+	public return_type class_ref 128770 // ConnectionHandler
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}ArrayList<${type}> ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Retourne la liste des gestionnaires de connexion.
+@return La liste des gestionnaires de connexion.
+"
+      end
+
+      operation 135042 "main"
+	class_operation public explicit_return_type "void"
+	nparams 1
+	  param inout name "args" explicit_type "String"
+	multiplicity "[]"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0}[] ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Méthode principale pour démarrer le serveur.
+@param args Les arguments de la ligne de commande (non utilisés dans cette implémentation).
+"
+      end
+    end
+
+    class 129154 "ControleurEnterMessagerie"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${static}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      comment "La classe ControleurEnterMessagerie agit en tant que contrôleur pour la messagerie d'une application JavaFX
+en réagissant à l'événement de pression de la touche \"Enter\" dans la zone de saisie de messages.
+Elle implémente l'interface EventHandler pour gérer les événements clavier.
+"
+      classrelation 128898 // <realization>
+	relation 128898 -_-|>
+	  a public
+	    java "${type}<KeyEvent>"
+	    classrelation_ref 128898 // <realization>
+	  b parent class_ref 129282 // EventHandler
+      end
+
+      classrelation 129026 // appli (<unidirectional association>)
+	relation 129026 --->
+	  a role_name "appli" private
+	    comment " Instance de l'application de chat"
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 129026 // appli (<unidirectional association>)
+	  b parent class_ref 128130 // ChatApplication
+      end
+
+      classrelation 129154 // client (<unidirectional association>)
+	relation 129154 --->
+	  a role_name "client" private
+	    comment " Instance du client de chat"
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 129154 // client (<unidirectional association>)
+	  b parent class_ref 128386 // Client
+      end
+
+      operation 131970 "ControleurEnterMessagerie"
+	public explicit_return_type ""
+	nparams 2
+	  param inout name "appli" type class_ref 128130 // ChatApplication
+	  param inout name "client" type class_ref 128386 // Client
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Constructeur de la classe ControleurEnterMessagerie.
+@param appli L'instance de l'application de chat.
+@param client L'instance du client de chat.
+"
+      end
+
+      operation 132098 "handle"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "event" explicit_type "KeyEvent"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+	comment "Gère l'événement lié à la pression de la touche \"Enter\" dans la zone de saisie de messages.
+Récupère le message à partir de l'application, crée un objet Message, le convertit en format JSON,
+et envoie le message via le client.
+Efface ensuite le champ de saisie de message dans l'interface graphique.
+@param event L'événement clavier déclenché lors de la pression de la touche \"Enter\".
+"
+      end
+
+      operation 132226 "sendMessage"
+	private explicit_return_type "void"
+	nparams 1
+	  param in name "message" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Envoie le message au serveur via le client.
+Efface ensuite le champ de saisie de message dans l'interface graphique.
+@param message Le message à envoyer.
+"
+      end
+    end
+
+    class 129410 "ControleurMessagerie"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${static}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      comment "La classe ControleurMessagerie agit en tant que contrôleur pour la messagerie d'une application JavaFX.
+Elle implémente l'interface EventHandler pour gérer les actions liées à l'envoi de messages.
+"
+      classrelation 129282 // <realization>
+	relation 129282 -_-|>
+	  a public
+	    java "${type}<ActionEvent>"
+	    classrelation_ref 129282 // <realization>
+	  b parent class_ref 129282 // EventHandler
+      end
+
+      classrelation 129410 // appli (<unidirectional association>)
+	relation 129410 --->
+	  a role_name "appli" private
+	    comment " Instance de l'application de chat"
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 129410 // appli (<unidirectional association>)
+	  b parent class_ref 128130 // ChatApplication
+      end
+
+      classrelation 129538 // client (<unidirectional association>)
+	relation 129538 --->
+	  a role_name "client" private
+	    comment " Instance du client de chat"
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 129538 // client (<unidirectional association>)
+	  b parent class_ref 128386 // Client
+      end
+
+      operation 132354 "ControleurMessagerie"
+	public explicit_return_type ""
+	nparams 2
+	  param inout name "appli" type class_ref 128130 // ChatApplication
+	  param inout name "client" type class_ref 128386 // Client
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Constructeur de la classe ControleurMessagerie.
+@param appli L'instance de l'application de chat.
+@param client L'instance du client de chat.
+"
+      end
+
+      operation 132482 "handle"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "event" explicit_type "ActionEvent"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+	comment "Gère l'événement lié à l'envoi de messages.
+Récupère le message à partir de l'application, crée un objet Message, le convertit en format JSON,
+et envoie le message via le client.
+Efface ensuite le champ de saisie de message dans l'interface graphique.
+@param event L'événement d'action déclenché lors de l'envoi de messages.
+"
+      end
+
+      operation 132610 "sendMessage"
+	private explicit_return_type "void"
+	nparams 1
+	  param in name "message" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Envoie le message au serveur via le client.
+Efface ensuite le champ de saisie de message dans l'interface graphique.
+@param message Le message à envoyer.
+"
+      end
+    end
+
+    class 129538 "Message"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${static}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      comment "La classe Message représente un message dans le système de chat.
+Chaque message a un identifiant unique, un utilisateur émetteur, un contenu textuel,
+une date d'envoi, et un nombre de likes.
+"
+      attribute 129794 "id"
+	private explicit_type "int"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+	comment " Identifiant unique du message"
+      end
+
+      attribute 129922 "user"
+	private explicit_type "String"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+	comment " Nom de l'utilisateur émetteur du message"
+      end
+
+      attribute 130050 "content"
+	private explicit_type "String"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+	comment " Contenu textuel du message"
+      end
+
+      attribute 130178 "date"
+	private explicit_type "Date"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+	comment " Date d'envoi du message"
+      end
+
+      attribute 130306 "likes"
+	private explicit_type "int"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+	comment " Nombre de likes du message"
+      end
+
+      operation 132738 "Message"
+	public explicit_return_type ""
+	nparams 5
+	  param in name "id" explicit_type "int"
+	  param in name "user" explicit_type "String"
+	  param in name "content" explicit_type "String"
+	  param inout name "date" explicit_type "Date"
+	  param in name "likes" explicit_type "int"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}, ${t3} ${p3}, ${t4} ${p4}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Constructeur de la classe Message.
+@param id Identifiant unique du message.
+@param user Nom de l'utilisateur émetteur du message.
+@param content Contenu textuel du message.
+@param date Date d'envoi du message.
+@param likes Nombre de likes du message.
+"
+      end
+
+      operation 132866 "getId"
+	public explicit_return_type "int"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Retourne l'identifiant du message.
+@return L'identifiant du message.
+"
+      end
+
+      operation 132994 "setId"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "id" explicit_type "int"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Modifie l'identifiant du message.
+@param id Le nouvel identifiant du message.
+"
+      end
+
+      operation 133122 "getUser"
+	public explicit_return_type "String"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Retourne le nom de l'utilisateur émetteur du message.
+@return Le nom de l'utilisateur.
+"
+      end
+
+      operation 133250 "setUser"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "user" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Modifie le nom de l'utilisateur émetteur du message.
+@param user Le nouveau nom de l'utilisateur.
+"
+      end
+
+      operation 133378 "getContent"
+	public explicit_return_type "String"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Retourne le contenu textuel du message.
+@return Le contenu textuel du message.
+"
+      end
+
+      operation 133506 "setContent"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "content" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Modifie le contenu textuel du message.
+@param content Le nouveau contenu textuel du message.
+"
+      end
+
+      operation 133634 "getDate"
+	public explicit_return_type "Date"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Retourne la date d'envoi du message.
+@return La date d'envoi du message.
+"
+      end
+
+      operation 133762 "setDate"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "date" explicit_type "Date"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Modifie la date d'envoi du message.
+@param date La nouvelle date d'envoi du message.
+"
+      end
+
+      operation 133890 "getLikes"
+	public explicit_return_type "int"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Retourne le nombre de likes du message.
+@return Le nombre de likes du message.
+"
+      end
+
+      operation 134018 "setLikes"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "likes" explicit_type "int"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Modifie le nombre de likes du message.
+@param likes Le nouveau nombre de likes du message.
+"
+      end
+
+      operation 134146 "toJSON"
+	public explicit_return_type "String"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Convertit le message en format JSON.
+@return Une chaîne JSON représentant le message.
+"
+      end
+    end
+
+    class 129666 "VueMessagerie"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${static}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      comment "La classe VueMessagerie représente la vue graphique d'une messagerie dans une application JavaFX.
+Elle comprend une zone de chat, une zone de saisie de message, un bouton d'envoi de message, et un label de statut.
+"
+      classrelation 130434 // <generalisation>
+	relation 130434 ---|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 130434 // <generalisation>
+	  b parent class_ref 129794 // BorderPane
+      end
+
+      attribute 130946 "chatArea"
+	private explicit_type "TextArea"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+	comment " Zone de chat affichant les messages"
+      end
+
+      attribute 131074 "messageTextField"
+	private explicit_type "TextField"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+	comment " Zone de saisie de messages"
+      end
+
+      attribute 131202 "BtnEnvoyerMessage"
+	private explicit_type "Button"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+	comment " Bouton d'envoi de messages"
+      end
+
+      attribute 131330 "statutLabel"
+	private explicit_type "Label"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+	comment " Label de statut"
+      end
+
+      operation 136066 "VueMessagerie"
+	public explicit_return_type ""
+	nparams 4
+	  param inout name "chatArea" explicit_type "TextArea"
+	  param inout name "messageTextField" explicit_type "TextField"
+	  param inout name "BtnEnvoyerMessage" explicit_type "Button"
+	  param inout name "statutLabel" explicit_type "Label"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}, ${t3} ${p3}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Constructeur de la classe VueMessagerie.
+@param chatArea La zone de chat.
+@param messageTextField La zone de saisie de message.
+@param BtnEnvoyerMessage Le bouton d'envoi de message.
+@param statutLabel Le label de statut.
+"
+      end
+
+      operation 136194 "creerPage"
+	private explicit_return_type "BorderPane"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Crée la mise en page de la vue de la messagerie avec la zone de chat en centre,
+la zone de saisie de message en bas, et le label de statut en haut.
+@return La mise en page BorderPane.
+"
+      end
+
+      operation 136322 "creerSaisieMessage"
+	private explicit_return_type "BorderPane"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Crée la mise en page de la zone de saisie de message avec la zone de texte au centre
+et le bouton d'envoi à droite.
+@return La mise en page BorderPane.
+"
+      end
+    end
+  end
+end

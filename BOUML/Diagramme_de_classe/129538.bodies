@@ -1,0 +1,33 @@
+class Message
+!!!132738.java!!!	Message(in id : int, in user : String, in content : String, inout date : Date, in likes : int)
+        this.id = id;
+        this.user = user;
+        this.content = content;
+        this.date = date;
+        this.likes = likes;
+!!!132866.java!!!	getId() : int
+        return id;
+!!!132994.java!!!	setId(in id : int) : void
+        this.id = id;
+!!!133122.java!!!	getUser() : String
+        return user;
+!!!133250.java!!!	setUser(in user : String) : void
+        this.user = user;
+!!!133378.java!!!	getContent() : String
+        return content;
+!!!133506.java!!!	setContent(in content : String) : void
+        this.content = content;
+!!!133634.java!!!	getDate() : Date
+        return date;
+!!!133762.java!!!	setDate(inout date : Date) : void
+        this.date = date;
+!!!133890.java!!!	getLikes() : int
+        return likes;
+!!!134018.java!!!	setLikes(in likes : int) : void
+        this.likes = likes;
+!!!134146.java!!!	toJSON() : String
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+        String formattedDate = dateFormat.format(this.date);
+
+        return String.format("{\"id\": %d, \"user\": \"%s\", \"content\": \"%s\", \"date\": \"%s\", \"likes\": %d}",
+                this.id, this.user, this.content, formattedDate, this.likes);
