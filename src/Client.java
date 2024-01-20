@@ -9,23 +9,51 @@ public class Client {
     private Socket client;
     private BufferedReader in;
     private PrintWriter out;
-    private MessageHandler messageHandler;
+    private ChatApplication application;
+    private boolean connected;
 
-    public Client(MessageHandler messageHandler) {
-        this.messageHandler = messageHandler;
-        connectToServer();
+    public Client(ChatApplication application) {
+        this.application = application;
+        connected = false;
+        new Thread(this::connectToServer).start();
     }
 
     private void connectToServer() {
-        try {
-            client = new Socket("localhost", 9999);
-            in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-            out = new PrintWriter(client.getOutputStream(), true);
+        while (!connected) {
+            try {
+                client = new Socket("localhost", 9999);
+                in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+                out = new PrintWriter(client.getOutputStream(), true);
 
-            new Thread(this::receiveMessages).start();
+                new Thread(this::receiveMessages).start();
+                System.out.println("Connecté au serveur.");
+                this.application.setStatut("Connecté au serveur.");
+                this.application.setTextFieldDisabled(false);
+                connected = true;
+            } catch (IOException e) {
+                System.out.println("Impossible de se connecter au serveur. Nouvelle tentative dans 5 secondes.");
+                this.application.setStatut("Impossible de se connecter au serveur. Nouvelle tentative dans 5 secondes.");
+                this.application.clearChatArea();
+                this.application.setTextFieldDisabled(true);
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException interruptedException) {
+                    interruptedException.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private void receiveMessages() {
+        try {
+            String message;
+            while ((message = in.readLine()) != null) {
+                application.traiterMessage(message);
+            }
         } catch (IOException e) {
-            e.printStackTrace();
             shutdown();
+            connected = false;
+            new Thread(this::connectToServer).start();
         }
     }
 
@@ -36,19 +64,8 @@ public class Client {
     }
 
     public void handleUserMessage(String message) {
-        messageHandler.handleMessage("Vous: " + message);
+        application.traiterMessage("Vous: " + message);
         sendMessage(message);
-    }
-
-    private void receiveMessages() {
-        try {
-            String message;
-            while ((message = in.readLine()) != null) {
-                messageHandler.handleMessage(message);
-            }
-        } catch (IOException e) {
-            shutdown();
-        }
     }
 
     public void shutdown() {
