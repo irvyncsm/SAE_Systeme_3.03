@@ -3,16 +3,27 @@ import java.net.*;
 import java.util.List;
 import java.util.ArrayList;
 
-public class ConnectionHandler implements Runnable {
-    private Socket client;
-    private BufferedReader in;
-    private PrintWriter out;
-    private String name;
-    private Server server;
-    private List<ConnectionHandler> connections;
-    private List<String> listeFollowers;
-    private List<String> listeFollowings;
+/**
+ * La classe ConnectionHandler gère la communication avec un client connecté à un serveur de chat.
+ * Chaque instance de cette classe est associée à un client individuel.
+ */
 
+public class ConnectionHandler implements Runnable {
+    private Socket client; // Le socket du client
+    private BufferedReader in; // Flux d'entrée pour lire les données du client
+    private PrintWriter out; // Flux de sortie pour envoyer des données au client
+    private String name; // Nom de l'utilisateur associé à ce gestionnaire de connexion
+    private Server server; // Référence au serveur auquel le gestionnaire de connexion est attaché
+    private List<ConnectionHandler> connections; // Liste des autres gestionnaires de connexion du serveur
+    private List<String> listeFollowers; // Liste des utilisateurs qui suivent l'utilisateur associé
+    private List<String> listeFollowings; // Liste des utilisateurs suivis par l'utilisateur associé
+
+
+    /**
+     * Constructeur de la classe ConnectionHandler.
+     * @param clientSocket Le socket du client.
+     * @param server Référence au serveur auquel le gestionnaire de connexion est attaché.
+     */
     public ConnectionHandler(Socket clientSocket, Server server) {
         this.connections = server.getConnections();
         this.client = clientSocket;
@@ -21,42 +32,81 @@ public class ConnectionHandler implements Runnable {
         this.listeFollowings = new ArrayList<>();
     }
 
+    /**
+     * Retourne le nombre d'utilisateurs qui suivent l'utilisateur associé.
+     * @return Le nombre de followers.
+     */
     public int getNombreFollowers() {
         return listeFollowers.size();
     }
 
+    /**
+     * Retourne le nombre d'utilisateurs suivis par l'utilisateur associé.
+     * @return Le nombre de followings.
+     */
     public int getNombreFollowings() {
         return listeFollowings.size();
     }
 
+    /**
+     * Permet à l'utilisateur associé de suivre un autre utilisateur.
+     * @param client Le nom de l'utilisateur à suivre.
+     */
     public void suivreClient(String client){
         listeFollowings.add(client);
     }
 
+    /**
+     * Ajoute un follower à la liste des utilisateurs qui suivent l'utilisateur associé.
+     * @param client Le nom du follower à ajouter.
+     */
     public void ajouterFollower(String client){
         listeFollowers.add(client);
     }
 
+    /**
+     * Ajoute un utilisateur à la liste des utilisateurs suivis par l'utilisateur associé.
+     * @param client Le nom de l'utilisateur à suivre.
+     */
     public void ajouterFollowing(String client){
         listeFollowings.add(client);
     }
 
+    /**
+     * Retire un follower de la liste des utilisateurs qui suivent l'utilisateur associé.
+     * @param client Le nom du follower à retirer.
+     */
     public void retirerFollower(String client){
         listeFollowers.remove(client);
     }
 
+    /**
+     * Retire un utilisateur de la liste des utilisateurs suivis par l'utilisateur associé.
+     * @param client Le nom de l'utilisateur à ne plus suivre.
+     */
     public void retirerFollowing(String client){
         listeFollowings.remove(client);
     }
 
+    /**
+     * Retourne la liste des followers de l'utilisateur associé.
+     * @return La liste des followers.
+     */
     public List<String> getListeFollowers() {
         return listeFollowers;
     }
 
+    /**
+     * Retourne la liste des utilisateurs suivis par l'utilisateur associé.
+     * @return La liste des followings.
+     */
     public List<String> getListeFollowings() {
         return listeFollowings;
     }
 
+    /**
+     * Méthode exécutée lorsqu'un thread est démarré. Gère la communication avec le client.
+     */
     @Override
     public void run() {
         try {
@@ -239,6 +289,10 @@ public class ConnectionHandler implements Runnable {
         }
     }
 
+    /**
+     * Retourne le nom de l'utilisateur associé à ce gestionnaire de connexion.
+     * @return Le nom de l'utilisateur.
+     */
     public String getName() {
         return name;
     }
