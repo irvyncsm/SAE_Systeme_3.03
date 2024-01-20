@@ -1,4 +1,3 @@
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -63,10 +62,5 @@ public class Message {
 
         return String.format("{\"id\": %d, \"user\": \"%s\", \"content\": \"%s\", \"date\": \"%s\", \"likes\": %d}",
                 this.id, this.user, this.content, formattedDate, this.likes);
-    }
-
-    public static void main(String[] args) throws ParseException {
-        Message message = new Message(987697, "toto", "Hello world !", new Date(), 3);
-        System.out.println(message.toJSON());
     }
 }

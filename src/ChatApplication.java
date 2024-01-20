@@ -82,5 +82,9 @@ public class ChatApplication extends Application {
             Platform.runLater(() -> statutLabel.setStyle("-fx-text-fill: red;"));
         }
     }
+
+    public Client getClient() {
+        return client;
+    }
 }
 

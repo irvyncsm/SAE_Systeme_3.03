@@ -1,3 +1,5 @@
+import java.util.Date;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
@@ -14,9 +16,17 @@ public class ControleurMessagerie implements EventHandler<ActionEvent>{
     @Override
     public void handle(ActionEvent event) {
             String message = this.appli.getMessage();
+            String username = "";
+            try {
+                username = this.appli.getClient().getUser().getUsername();
+            } catch (Exception e) {
+                System.out.println("Utilisateur null");
+            }
+            Message m = new Message(0, username, message, new Date(), 0);
+            String json = m.toJSON();
             if (!message.isEmpty()) {
-                System.out.println("Message envoyé : " + message);
-                sendMessage(message);
+                System.out.println("Message envoyé : " + json);
+                sendMessage(json);
             }
             
     }

@@ -11,6 +11,7 @@ public class Client {
     private PrintWriter out;
     private ChatApplication application;
     private boolean connected;
+    private User user;
 
     public Client(ChatApplication application) {
         this.application = application;
@@ -64,7 +65,9 @@ public class Client {
     }
 
     public void handleUserMessage(String message) {
-        application.traiterMessage("Vous: " + message);
+        String content = message.substring(message.indexOf("content") + 10, message.indexOf("date") - 3);
+        content = content.substring(1, content.length() - 1);
+        application.traiterMessage("Vous: " + content);
         sendMessage(message);
     }
 
@@ -78,6 +81,10 @@ public class Client {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public User getUser() {
+        return user;
     }
 
     interface MessageHandler {

@@ -86,12 +86,19 @@ public class Server implements Runnable{
                 out = new PrintWriter(client.getOutputStream(), true);
                 in = new BufferedReader(new InputStreamReader(client.getInputStream()));
                 out.println("Entrez votre nom: ");
-                name = in.readLine();
+                String nameData = in.readLine();
+                // récupérer le nom de l'utilisateur dans la réponse JSON du client
+                // ex: {"id": 0, "user": "", "content": "irvyn", "date": "2024-01-20T16:25:41Z", "likes": 0}
+                name = nameData.substring(nameData.indexOf("content") + 10, nameData.indexOf("date") - 3);
+                // enlever les guillemets autour du nom (ex: "toto" -> toto)
+                name = name.substring(1, name.length() - 1);
                 System.out.println("New connection from " + name);
-                broadcast(name, name + " a rejoint le chat.");
-                String line;
+                broadcast(name, name + " est connecté.");
+                String readLine;
 
-                while ((line = in.readLine()) != null) {
+                while ((readLine = in.readLine()) != null) {
+                    String line = readLine.substring(readLine.indexOf("content") + 10, readLine.indexOf("date") - 3);
+                    line = line.substring(1, line.length() - 1);
                     if (line.startsWith("/nick")) {
                         String[] messageSplit = line.split(" ", 2);
                         if (messageSplit.length == 2) {
@@ -122,7 +129,7 @@ public class Server implements Runnable{
                             out.println("Commande Invalide. Usage: /nick <new name>");
                         }
                     } else if (line.startsWith("/quit")) {
-                        broadcast(name, name + " a quitté le chat.");
+                        broadcast(name, name + " vient de se déconnecter.");
                         server.removeConnection(this);
                         break;
                     } else if (line.startsWith("/list")) {
@@ -195,7 +202,7 @@ public class Server implements Runnable{
                 }
             } catch (IOException e) {
                 // Ici, on gère la déconnexion inattendue
-                server.broadcast(name, name + " a quitté le chat de manière inattendue.");
+                server.broadcast(name, name + " s'est déconnecté de manière inattendue.");
             } finally {
                 shutdown();
             }
