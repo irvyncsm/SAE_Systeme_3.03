@@ -4,6 +4,9 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+/**
+ * Représente un client qui se connecte à un serveur pour la messagerie.
+ */
 public class Client {
 
     private Socket client;
@@ -14,6 +17,11 @@ public class Client {
     private boolean isFirstConnection;
     private User user;
 
+    /**
+     * Constructeur de la classe Client.
+     *
+     * @param application L'application de chat associée à ce client.
+     */
     public Client(ChatApplication application) {
         this.application = application;
         connected = false;
@@ -21,6 +29,9 @@ public class Client {
         new Thread(this::connectToServer).start();
     }
 
+    /**
+     * Méthode privée pour établir la connexion avec le serveur.
+     */
     private void connectToServer() {
         while (!connected) {
             try {
@@ -47,6 +58,9 @@ public class Client {
         }
     }
 
+    /**
+     * Méthode privée pour recevoir les messages du serveur.
+     */
     private void receiveMessages() {
         try {
             String message;
@@ -60,12 +74,22 @@ public class Client {
         }
     }
 
+    /**
+     * Envoie un message au serveur.
+     *
+     * @param message Le message à envoyer.
+     */
     public void sendMessage(String message) {
         if (out != null) {
             out.println(message);
         }
     }
 
+    /**
+     * Traite le message utilisateur, extrait le contenu et le transmet à l'application.
+     *
+     * @param message Le message utilisateur.
+     */
     public void handleUserMessage(String message) {
         String content = message.substring(message.indexOf("content") + 10, message.indexOf("date") - 3);
         content = content.substring(1, content.length() - 1);
@@ -77,6 +101,9 @@ public class Client {
         sendMessage(message);
     }
 
+    /**
+     * Ferme proprement les flux et la connexion du client.
+     */
     public void shutdown() {
         try {
             if (in != null) in.close();
@@ -89,10 +116,18 @@ public class Client {
         }
     }
 
+    /**
+     * Obtient l'utilisateur associé à ce client.
+     *
+     * @return L'utilisateur associé à ce client.
+     */
     public User getUser() {
         return user;
     }
 
+    /**
+     * Interface pour la gestion des messages.
+     */
     interface MessageHandler {
         void handleMessage(String message);
     }

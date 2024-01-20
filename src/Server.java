@@ -5,19 +5,27 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class Server implements Runnable{
+/**
+ * Représente un serveur de chat simple qui accepte les connexions des clients et gère la diffusion de messages.
+ */
+public class Server implements Runnable {
 
     private ArrayList<ConnectionHandler> connections;
     private ServerSocket server;
     private boolean done;
     private ExecutorService pool;
 
-
-    public Server(){
+    /**
+     * Initialise une nouvelle instance de Server.
+     */
+    public Server() {
         connections = new ArrayList<>();
         done = false;
     }
 
+    /**
+     * Exécute le serveur, accepte les connexions des clients et les gère avec un pool de threads.
+     */
     @Override
     public void run() {
         try {
@@ -36,30 +44,46 @@ public class Server implements Runnable{
         }
     }
 
+    /**
+     * Diffuse un message à tous les clients connectés, sauf l'expéditeur.
+     *
+     * @param senderName Le nom de l'expéditeur.
+     * @param message    Le message à diffuser.
+     */
     public void broadcast(String senderName, String message) {
         synchronized (connections) {
             for (ConnectionHandler handler : connections) {
                 if (handler != null && handler.getName() != null && !handler.getName().equals(senderName)) {
                     handler.sendMessage(message);
-                    System.out.println(senderName + " à envoyé : " + message + " à " + handler.getName());
+                    System.out.println(senderName + " a envoyé : " + message + " à " + handler.getName());
                 }
             }
         }
     }
-    
+
+    /**
+     * Envoie un message à des followers spécifiques de l'expéditeur.
+     *
+     * @param senderName    Le nom de l'expéditeur.
+     * @param message       Le message à envoyer.
+     * @param listeFollowers La liste des followers à qui envoyer le message.
+     */
     public void postMessage(String senderName, String message, List<String> listeFollowers) {
         synchronized (connections) {
             for (ConnectionHandler handler : connections) {
                 if (handler != null && handler.getName() != null && !handler.getName().equals(senderName)) {
                     if (listeFollowers.contains(handler.getName())) {
                         handler.sendMessage(message);
-                        System.out.println(senderName + " à envoyé : " + message + " à " + handler.getName());
+                        System.out.println(senderName + " a envoyé : " + message + " à " + handler.getName());
                     }
                 }
             }
         }
     }
-    
+
+    /**
+     * Arrête le serveur, ferme le socket du serveur et arrête tous les gestionnaires de connexion.
+     */
     public void shutdown() {
         try {
             done = true;
@@ -76,17 +100,31 @@ public class Server implements Runnable{
         }
     }
 
+    /**
+     * Supprime un gestionnaire de connexion de la liste des connexions actives.
+     *
+     * @param handler Le gestionnaire de connexion à supprimer.
+     */
     public void removeConnection(ConnectionHandler handler) {
         synchronized (connections) {
             connections.remove(handler);
         }
     }
 
+    /**
+     * Obtient la liste des gestionnaires de connexion actifs.
+     *
+     * @return La liste des gestionnaires de connexion.
+     */
     public ArrayList<ConnectionHandler> getConnections() {
         return connections;
     }
-    
 
+    /**
+     * La méthode principale pour démarrer le serveur.
+     *
+     * @param args Arguments en ligne de commande (non utilisés).
+     */
     public static void main(String[] args) {
         Server server = new Server();
         server.run();

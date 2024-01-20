@@ -3,6 +3,10 @@ import java.net.*;
 import java.util.List;
 import java.util.ArrayList;
 
+
+/**
+ * Gère la connexion avec un client sur le serveur de messagerie.
+ */
 public class ConnectionHandler implements Runnable {
     private Socket client;
     private BufferedReader in;
@@ -13,6 +17,12 @@ public class ConnectionHandler implements Runnable {
     private List<String> listeFollowers;
     private List<String> listeFollowings;
 
+    /**
+     * Initialise un nouvel objet ConnectionHandler.
+     *
+     * @param clientSocket Le socket du client.
+     * @param server       Le serveur auquel le client est connecté.
+     */
     public ConnectionHandler(Socket clientSocket, Server server) {
         this.connections = server.getConnections();
         this.client = clientSocket;
@@ -21,42 +31,90 @@ public class ConnectionHandler implements Runnable {
         this.listeFollowings = new ArrayList<>();
     }
 
+    /**
+     * Obtient le nombre de followers de ce client.
+     *
+     * @return Le nombre de followers.
+     */
     public int getNombreFollowers() {
         return listeFollowers.size();
     }
 
+    /**
+     * Obtient le nombre de followings de ce client.
+     *
+     * @return Le nombre de followings.
+     */
     public int getNombreFollowings() {
         return listeFollowings.size();
     }
 
+    /**
+     * Permet à ce client de suivre un autre client.
+     *
+     * @param client Le nom du client à suivre.
+     */
     public void suivreClient(String client){
         listeFollowings.add(client);
     }
 
+    /**
+     * Ajoute un follower à la liste de followers de ce client.
+     *
+     * @param client Le nom du follower à ajouter.
+     */
     public void ajouterFollower(String client){
         listeFollowers.add(client);
     }
 
+    /**
+     * Ajoute un following à la liste de followings de ce client.
+     *
+     * @param client Le nom du following à ajouter.
+     */
     public void ajouterFollowing(String client){
         listeFollowings.add(client);
     }
 
+    /**
+     * Retire un follower de la liste de followers de ce client.
+     *
+     * @param client Le nom du follower à retirer.
+     */
     public void retirerFollower(String client){
         listeFollowers.remove(client);
     }
 
+    /**
+     * Retire un following de la liste de followings de ce client.
+     *
+     * @param client Le nom du following à retirer.
+     */
     public void retirerFollowing(String client){
         listeFollowings.remove(client);
     }
 
+    /**
+     * Obtient la liste des followers de ce client.
+     *
+     * @return La liste des followers.
+     */
     public List<String> getListeFollowers() {
         return listeFollowers;
     }
 
+    /**
+     * Obtient la liste des followings de ce client.
+     *
+     * @return La liste des followings.
+     */
     public List<String> getListeFollowings() {
         return listeFollowings;
     }
 
+    /**
+     * Exécute le thread du gestionnaire de connexion avec le client.
+     */
     @Override
     public void run() {
         try {
@@ -117,6 +175,11 @@ public class ConnectionHandler implements Runnable {
         }
     }
 
+    /**
+     * Affiche le profil d'un autre client spécifié par son nom.
+     *
+     * @param messageSplit Le message entré par le client.
+     */
     private void afficherAutreProfil(String[] messageSplit) {
         if (messageSplit.length == 2) {
             String followName = messageSplit[1];
@@ -136,6 +199,9 @@ public class ConnectionHandler implements Runnable {
         }
     }
 
+    /**
+     * Affiche le profil de ce client, montrant les followers et followings.
+     */
     private void afficherProfil() {
         for (ConnectionHandler handler : connections) {
             if (handler != null && handler.getName() != null && handler.getName().equals(this.name)) {
@@ -151,6 +217,9 @@ public class ConnectionHandler implements Runnable {
         }
     }
 
+    /**
+     * Affiche les commandes disponibles pour le client.
+     */
     private void afficherAide() {
         out.println("");
         out.println("Commandes disponibles: ");
@@ -166,6 +235,11 @@ public class ConnectionHandler implements Runnable {
         out.println("--> /quit : Quitte le chat.");
     }
 
+    /**
+     * Méthode privée pour traiter la commande /unfollow.
+     *
+     * @param messageSplit Le message entré par le client.
+     */
     private void unfollow(String[] messageSplit) {
         if (messageSplit.length == 2) {
             String unfollowName = messageSplit[1];
@@ -196,6 +270,11 @@ public class ConnectionHandler implements Runnable {
         }   
     }
 
+    /**
+     * Méthode privée pour traiter la commande /follow.
+     *
+     * @param messageSplit Le message entré par le client.
+     */
     private void follow(String[] messageSplit) {
         if (messageSplit.length == 2) {
             String followName = messageSplit[1];
@@ -234,6 +313,12 @@ public class ConnectionHandler implements Runnable {
         }
     }
 
+     /**
+     * Méthode privée pour obtenir le nom du client à partir de sa réponse JSON.
+     *
+     * @param in Le BufferedReader pour lire l'entrée du client.
+     * @throws IOException En cas d'erreur d'entrée/sortie.
+     */
     private void requestName(BufferedReader in) throws IOException {
         out.println("Entrez votre nom: ");
         String nameData = in.readLine();
@@ -246,6 +331,11 @@ public class ConnectionHandler implements Runnable {
         server.broadcast(this.name, this.name + " est connecté.");
     }
 
+      /**
+     * Méthode privée pour traiter la commande /nick.
+     *
+     * @param messageSplit Le message entré par le client.
+     */
     private void nick(String[] messageSplit) {
         if (messageSplit.length == 2) {
             boolean renamed = false;
@@ -276,14 +366,27 @@ public class ConnectionHandler implements Runnable {
         }
     }
 
+     /**
+     * Obtient le nom de ce client.
+     *
+     * @return Le nom du client.
+     */
     public String getName() {
         return this.name;
     }
 
+     /**
+     * Envoie un message à ce client.
+     *
+     * @param message Le message à envoyer.
+     */
     public void sendMessage(String message){
         out.println(message);
     }
 
+    /**
+     * Ferme proprement la connexion avec ce client.
+     */
     public void shutdown(){
         try {
             in.close();
