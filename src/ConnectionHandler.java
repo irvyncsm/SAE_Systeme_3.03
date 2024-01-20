@@ -9,11 +9,51 @@ public class ConnectionHandler implements Runnable {
     private String name;
     private Server server;
     private List<ConnectionHandler> connections;
+    private List<String> listeFollowers;
+    private List<String> listeFollowings;
 
     public ConnectionHandler(Socket clientSocket, Server server) {
         this.connections = server.getConnections();
         this.client = clientSocket;
         this.server = server;
+        this.listeFollowers = new ArrayList<>();
+        this.listeFollowings = new ArrayList<>();
+    }
+
+    public int getNombreFollowers() {
+        return listeFollowers.size();
+    }
+
+    public int getNombreFollowings() {
+        return listeFollowings.size();
+    }
+
+    public void suivreClient(String client){
+        listeFollowings.add(client);
+    }
+
+    public void ajouterFollower(String client){
+        listeFollowers.add(client);
+    }
+
+    public void ajouterFollowing(String client){
+        listeFollowings.add(client);
+    }
+
+    public void retirerFollower(String client){
+        listeFollowers.remove(client);
+    }
+
+    public void retirerFollowing(String client){
+        listeFollowings.remove(client);
+    }
+
+    public List<String> getListeFollowers() {
+        return listeFollowers;
+    }
+
+    public List<String> getListeFollowings() {
+        return listeFollowings;
     }
 
     @Override
@@ -80,15 +120,27 @@ public class ConnectionHandler implements Runnable {
                     if (messageSplit.length == 2) {
                         String followName = messageSplit[1];
                         boolean found = false;
+                        ConnectionHandler handlerQuiSuit = null;
                         if (followName.equals(name)) {
                             out.println("Vous ne pouvez pas vous suivre vous-même.");
                             continue;
                         }
                         for (ConnectionHandler handler : connections) {
+                            if(handler.getName().equals(name)){
+                                handlerQuiSuit = handler;
+                            }
                             if (handler != null && handler.getName() != null && handler.getName().equals(followName)) {
-                                out.println("Vous suivez maintenant " + followName);
                                 found = true;
-                                handler.sendMessage(name + " vous suit maintenant.");
+                                if(handler.getListeFollowers().contains(followName)){
+                                    out.println("Vous suivez déjà " + followName);
+                                }
+
+                                else{
+                                    out.println("Vous suivez maintenant " + followName);
+                                    handler.ajouterFollower(followName);
+                                    handlerQuiSuit.ajouterFollowing(followName);
+                                    handler.sendMessage(name + " vous suit maintenant.");
+                                }
                             }
                         }
                         if (!found) {
@@ -97,16 +149,27 @@ public class ConnectionHandler implements Runnable {
                     } else {
                         out.println("Commande Invalide. Usage: /follow <name>");
                     }
-                } else if (line.startsWith("/unfollow")) {
+                }else if (line.startsWith("/unfollow")) {
                     String[] messageSplit = line.split(" ", 2);
                     if (messageSplit.length == 2) {
                         String followName = messageSplit[1];
                         boolean found = false;
+                        ConnectionHandler handlerQuiSuit = null;
                         for (ConnectionHandler handler : connections) {
+                            if(handler.getName().equals(name)){
+                                handlerQuiSuit = handler;
+                            }
                             if (handler != null && handler.getName() != null && handler.getName().equals(followName)) {
-                                out.println("Vous ne suivez plus " + followName);
                                 found = true;
-                                handler.sendMessage(name + " ne vous suit plus.");
+                                if(!handler.getListeFollowers().contains(followName)){
+                                    out.println("Vous ne suivez pas " + followName);
+                                }
+                                else{
+                                    handlerQuiSuit.retirerFollowing(followName);
+                                    handler.getListeFollowers().remove(followName);
+                                    out.println("Vous ne suivez plus " + followName);
+                                    handler.sendMessage(name + " ne vous suit plus.");
+                                }
                             }
                         }
                         if (!found) {
@@ -114,7 +177,7 @@ public class ConnectionHandler implements Runnable {
                         }
                     } else {
                         out.println("Commande Invalide. Usage: /unfollow <name>");
-                    }
+                    }                
                 } else if (line.startsWith("/like") || line.equals("like ")) {
                     out.println("Fonctionnalité /like <id_message> non implémentée.");
                 } else if (line.startsWith("/unlike") || line.equals("unlike ")) {
